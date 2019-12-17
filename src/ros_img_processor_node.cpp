@@ -77,8 +77,8 @@ void RosImgProcessorNode::process()
         {
                 center = cv::Point(cvRound(circles[ii][0]), cvRound(circles[ii][1]));
                 radius = cvRound(circles[ii][2]);
-                cv::circle(cv_img_out_.image, center, 5, cv::Scalar(0,255,0), -1, 8, 0 );// circle center in green image_in o image_out ¿?
-                cv::circle(cv_img_out_.image, center, radius, cv::Scalar(0,0,255), 3, 8, 0 );// circle perimeter in red
+                cv::circle(cv_img_out_.image, center, 5, cv::Scalar(0,255,0), -1, 8, 0 );// circle center in green
+                cv::circle(cv_img_out_.image, center, radius, cv::Scalar(255,0,0), 3, 8, 0 );// circle perimeter in red
         }
 
 
@@ -88,8 +88,8 @@ void RosImgProcessorNode::process()
        // draw a bounding box around the ball
         box.x = center.x-radius;
         box.y = center.y-radius;
-        box.width = radius*2;
-        box.height = radius*2;
+        box.width = radius*2+1;
+        box.height = radius*2+1;
         cv::rectangle(cv_img_out_.image, box, cv::Scalar(0,255,255), 3);
       }
     }
