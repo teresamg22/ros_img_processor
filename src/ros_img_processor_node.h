@@ -35,7 +35,7 @@ class RosImgProcessorNode
 
         //publishers
         image_transport::Publisher image_pub_;
-		ros::Publisher marker_publisher_;
+		    ros::Publisher marker_publisher_;
 
         //pointer to received (in) and published (out) images
         cv_bridge::CvImagePtr cv_img_ptr_in_;
