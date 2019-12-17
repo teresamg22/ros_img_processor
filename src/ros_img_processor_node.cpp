@@ -52,7 +52,7 @@ void RosImgProcessorNode::process()
         cv_img_out_.image = cv_img_ptr_in_->image;
 
 		// find the ball
-    // cv::Mat image;
+
     cv::Mat gray_image;
     std::vector<cv::Vec3f> circles;
     cv::Point center;
@@ -62,7 +62,7 @@ void RosImgProcessorNode::process()
     circles.clear();
 
     // If input image is RGB, convert it to gray
-    cv::cvtColor(image, gray_image, CV_BGR2GRAY);
+    cv::cvtColor(cv_img_out_.image, gray_image, CV_BGR2GRAY);
 
     //Reduce the noise so we avoid false circle detection
     cv::GaussianBlur( gray_image, gray_image, cv::Size(GAUSSIAN_BLUR_SIZE, GAUSSIAN_BLUR_SIZE), GAUSSIAN_BLUR_SIGMA );
@@ -77,21 +77,21 @@ void RosImgProcessorNode::process()
         {
                 center = cv::Point(cvRound(circles[ii][0]), cvRound(circles[ii][1]));
                 radius = cvRound(circles[ii][2]);
-                cv::circle(image, center, 5, cv::Scalar(0,0,255), -1, 8, 0 );// circle center in green image_in o image_out ¿?
-                cv::circle(image, center, radius, cv::Scalar(0,0,255), 3, 8, 0 );// circle perimeter in red
+                cv::circle(cv_img_out_.image, center, 5, cv::Scalar(0,255,0), -1, 8, 0 );// circle center in green image_in o image_out ¿?
+                cv::circle(cv_img_out_.image, center, radius, cv::Scalar(0,0,255), 3, 8, 0 );// circle perimeter in red
         }
-    }
+
 
 		// find the direction vector
-		//TODO
-		direction_ << 1,1,2.5;  // just to draw something with the arrow marker
+			 direction_ << center.x,center.y,1;  // just to draw something with the arrow marker
 
-        // draw a bounding box around the ball
-        box.x = (cv_img_ptr_in_->image.cols/2)-10;
-        box.y = (cv_img_ptr_in_->image.rows/2)-10;
-        box.width = 20;
-        box.height = 20;
+       // draw a bounding box around the ball
+        box.x = center.x-radius;
+        box.y = center.y-radius;
+        box.width = radius*2;
+        box.height = radius*2;
         cv::rectangle(cv_img_out_.image, box, cv::Scalar(0,255,255), 3);
+      }
     }
 
     //reset input image
