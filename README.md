@@ -47,7 +47,8 @@ First to find the direction vector of the ball, the camera has to find the ball,
      }
  ````
  Later,to find the direction vector it has been used the Marker.msgs and to do the square the rectangle function of the OpenCV with the information extract in the circles found in the previous step.
- `````
+
+```
  //draw circles on the image
     for(unsigned int ii = 0; ii < circles.size(); ii++ )
     {
@@ -60,8 +61,8 @@ First to find the direction vector of the ball, the camera has to find the ball,
         }
 
 
-		   // find the direction vector
-			 direction_ << center.x,center.y,1;  // just to draw something with the arrow marker
+       // find the direction vector
+        direction_ << center.x,center.y,1;  // just to draw something with the arrow marker
 
        // draw a bounding box around the ball
         box.x = center.x-radius;
@@ -70,8 +71,9 @@ First to find the direction vector of the ball, the camera has to find the ball,
         box.height = radius*2+1;
         cv::rectangle(cv_img_out_.image, box, cv::Scalar(0,255,255), 3);
       }
-      
-    ````
-    And the result is the following one:
-    
+ ```  
+ And the result is the following one:
+ 
+![Capture of ros_img_processor program](https://github.com/teresamg22/ros_img_processor/blob/master/media/image1.png)
+
     
